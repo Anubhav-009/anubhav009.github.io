@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anubhav Kumar Pandey</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --accent: #1a4fff;
+      --accent-light: #e8eeff;
+      --border: #e2dfd8;
+      --tag-bg: #f0f0eb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(247,245,240,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 6rem 4rem; max-width: 900px; margin: 0 auto; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 8rem;
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-bio {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+      border: 1.5px solid var(--ink);
+    }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--ink); }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%; height: 1px;
+      background: var(--border);
+      max-width: 900px; margin: 0 auto;
+    }
+
+    /* SECTION HEADERS */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px; background: var(--border);
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+    .about-stats { display: flex; flex-direction: column; gap: 1.5rem; }
+    .stat-item { border-left: 2px solid var(--accent); padding-left: 1.2rem; }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-desc { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(26,79,255,0.06); }
+    .skill-card-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      background: var(--tag-bg);
+      color: var(--ink);
+      padding: 0.3rem 0.65rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 2.5rem; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .exp-meta { padding-top: 0.3rem; }
+    .exp-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+    .exp-company { font-size: 0.82rem; color: var(--muted); }
+    .exp-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exp-bullets li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute; left: 0;
+      color: var(--accent);
+    }
+
+    /* PROJECTS */
+    .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .proj-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .proj-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .proj-icon { font-size: 1.4rem; margin-bottom: 1rem; }
+    .proj-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+    .proj-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.2rem; }
+    .proj-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .proj-link:hover { text-decoration: underline; }
+
+    /* CONTACT */
+    .contact-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .contact-left h2 { margin-bottom: 0.5rem; }
+    .contact-left p { color: var(--muted); font-size: 0.95rem; max-width: 380px; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.9rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.875rem; color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); }
+    .contact-link-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      background: var(--tag-bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      letter-spacing: 0.06em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .proj-grid { grid-template-columns: 1fr; }
+      .contact-wrap { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-name">Anubhav K. Pandey</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-label">Data · Product · Analytics</p>
+    <h1>Anubhav<br><em>Kumar Pandey</em></h1>
+    <p class="hero-bio">
+      Data Integrity Analyst at American Express with 3+ years of experience in data validation, reconciliation, and cross-market reporting. Building toward data-led product management.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn btn-secondary">View Experience</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about" class="fade-in">
+    <p class="section-label">About Me</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a data-driven analyst specialising in data integrity, reconciliation, and reporting within regulated financial environments. At American Express, I work across US and EMEA markets ensuring data accuracy for premium corporate clients.
+        </p>
+        <p>
+          My goal is to grow into a Data or Product Management role — bridging the gap between complex data systems and business outcomes through analytical rigour and structured problem-solving.
+        </p>
+        <p>
+          Currently pursuing an M.S. in Computer Science at IIT Patna, while upskilling in Python, SQL, and data science concepts.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-number">3+</div>
+          <div class="stat-desc">Years at American Express</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3,000+</div>
+          <div class="stat-desc">US Business Travel Accounts managed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-desc">Dispute resolution rate (EMEA)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">IIT Patna</div>
+          <div class="stat-desc">M.S. Computer Science (2026–2028)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills" class="fade-in">
+    <p class="section-label">Skills & Tools</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">Technical</div>
+        <div class="tags">
+          <span class="tag">SQL</span>
+          <span class="tag">Advanced Excel</span>
+          <span class="tag">Python</span>
+          <span class="tag">Pivot Tables</span>
+          <span class="tag">XLOOKUP</span>
+          <span class="tag">Data Reconciliation</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Data & Reporting</div>
+        <div class="tags">
+          <span class="tag">Data Integrity</span>
+          <span class="tag">Root Cause Analysis</span>
+          <span class="tag">Data Governance</span>
+          <span class="tag">Data Pipelines</span>
+          <span class="tag">Big Data Concepts</span>
+          <span class="tag">Structured Data</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Product & Process</div>
+        <div class="tags">
+          <span class="tag">User Story Writing</span>
+          <span class="tag">Agile</span>
+          <span class="tag">RCSA</span>
+          <span class="tag">Process Automation</span>
+          <span class="tag">Stakeholder Management</span>
+          <span class="tag">Cross-functional Collaboration</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="fade-in">
+    <p class="section-label">Work Experience</p>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Jul 2024 – Present</div>
+          <div class="exp-company">American Express<br>Gurugram, India</div>
+        </div>
+        <div>
+          <div class="exp-role">Master Analyst</div>
+          <ul class="exp-bullets">
+            <li>Led end-to-end validation and quality assurance of high-volume travel data streams from multiple TMCs using SQL and Excel across 3,000+ US Business Travel Accounts.</li>
+            <li>Collaborated with Product Managers and Data Engineers to refine reporting requirements and implement automated controls for risk mitigation.</li>
+            <li>Owned complete reconciliation and real-time account monitoring, ensuring accurate statement generation for premium corporate clients.</li>
+            <li>Conducted rigorous data accuracy audits and root cause analyses to resolve anomalies and track recurring pipeline issues.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Nov 2022 – Jun 2024</div>
+          <div class="exp-company">American Express<br>Gurugram, India</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Analyst</div>
+          <ul class="exp-bullets">
+            <li>Managed key financial workflows for EMEA Corporate Business Travel Accounts including reconciliation, FATCA-aligned processes, and credit balance actions.</li>
+            <li>Led the complete dispute lifecycle for EMEA EBTA accounts, handling 90% of merchant chargebacks with a 100% resolution rate.</li>
+            <li>Drove quarterly cross-functional reviews with Credit, Frontline, and ACT teams to streamline payment allocation workflows.</li>
+            <li>Mentored team members on dispute management, operational policy, and data-quality standards across European markets.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="fade-in">
+    <p class="section-label">Projects</p>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-icon">⚙️</div>
+        <div class="proj-name">Modular Automation</div>
+        <p class="proj-desc">Led operational contributions to streamline workflows by automating CLIC and Globestar annotation processes at American Express, significantly reducing manual effort across the team.</p>
+        <span class="tag">Process Automation</span>&nbsp;<span class="tag">Operations</span>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon">🐍</div>
+        <div class="proj-name">Python Calculator</div>
+        <p class="proj-desc">A clean, modular Python calculator built as part of a data science learning journey — demonstrating Python fundamentals and GitHub workflow basics.</p>
+        <a class="proj-link" href="https://github.com/anubhav-pandey009" target="_blank">→ View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="fade-in">
+    <p class="section-label">Contact</p>
+    <div class="contact-wrap">
+      <div class="contact-left">
+        <h2>Let's connect.</h2>
+        <p>Open to conversations about data, product management, and new opportunities within the analytics space.</p>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:panubhav009@gmail.com">
+          <span class="contact-link-icon">email</span>
+          panubhav009@gmail.com
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/anubhav-pandey009" target="_blank">
+          <span class="contact-link-icon">linkedin</span>
+          anubhav-pandey009
+        </a>
+        <a class="contact-link" href="https://github.com/anubhav-pandey009" target="_blank">
+          <span class="contact-link-icon">github</span>
+          anubhav-pandey009
+        </a>
+        <a class="contact-link" href="tel:+917827614560">
+          <span class="contact-link-icon">phone</span>
+          +91 78276 14560
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Anubhav Kumar Pandey &nbsp;·&nbsp; Built with GitHub Pages
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
